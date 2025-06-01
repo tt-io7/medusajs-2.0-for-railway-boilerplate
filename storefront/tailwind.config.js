@@ -22,19 +22,27 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: "#3B82F6", // Blue
-          light: "#93C5FD",
-          dark: "#1D4ED8",
+          DEFAULT: "#A78BFA", // Lilac accent
+          light: "#C4B5FD",
+          dark: "#8B5CF6",
         },
         secondary: {
-          DEFAULT: "#10B981", // Green
-          light: "#6EE7B7",
-          dark: "#047857",
+          DEFAULT: "#F59E0B", // Gold accent
+          light: "#FCD34D",
+          dark: "#D97706",
         },
         accent: {
-          DEFAULT: "#8B5CF6", // Purple
+          DEFAULT: "#A78BFA", // Lilac accent
           light: "#C4B5FD",
-          dark: "#6D28D9",
+          dark: "#8B5CF6",
+        },
+        dark: {
+          DEFAULT: "#1F2937", // Main dark background
+          light: "#374151",   // Lighter dark sections
+          lighter: "#4B5563", // Even lighter for contrast
+          text: "#FFFFFF",    // Pure white for primary text
+          muted: "#E5E7EB",   // Very light grey for secondary text
+          subtle: "#F3F4F6",  // Almost white for subtle text
         },
         grey: {
           0: "#FFFFFF",
