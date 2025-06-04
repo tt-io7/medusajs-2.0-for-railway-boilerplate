@@ -116,29 +116,19 @@ const medusaConfig = {
         ]
       }
     }] : []),
-    ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET || PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET ? [{
+    ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
       key: Modules.PAYMENT,
       resolve: '@medusajs/payment',
       options: {
         providers: [
-          ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
+          {
             resolve: '@medusajs/payment-stripe',
             id: 'stripe',
             options: {
               apiKey: STRIPE_API_KEY,
               webhookSecret: STRIPE_WEBHOOK_SECRET,
             },
-          }] : []),
-          ...(PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET ? [{
-            resolve: '@medusajs/payment-paypal',
-            id: 'paypal',
-            options: {
-              clientId: PAYPAL_CLIENT_ID,
-              clientSecret: PAYPAL_CLIENT_SECRET,
-              sandbox: PAYPAL_SANDBOX,
-              authWebhookId: PAYPAL_AUTH_WEBHOOK_ID,
-            },
-          }] : []),
+          },
         ],
       },
     }] : [])
@@ -161,6 +151,15 @@ const medusaConfig = {
           }
         }
       }
+    }] : []),
+  ...(PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET ? [{
+      resolve: 'medusa-payment-paypal',
+      options: {
+        sandbox: PAYPAL_SANDBOX,
+        clientId: PAYPAL_CLIENT_ID,
+        clientSecret: PAYPAL_CLIENT_SECRET,
+        authWebhookId: PAYPAL_AUTH_WEBHOOK_ID,
+      },
     }] : [])
   ]
 };
