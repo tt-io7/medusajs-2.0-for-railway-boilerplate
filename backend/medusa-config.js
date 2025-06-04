@@ -15,6 +15,10 @@ import {
   STORE_CORS,
   STRIPE_API_KEY,
   STRIPE_WEBHOOK_SECRET,
+  PAYPAL_CLIENT_ID,
+  PAYPAL_CLIENT_SECRET,
+  PAYPAL_SANDBOX,
+  PAYPAL_AUTH_WEBHOOK_ID,
   WORKER_MODE,
   MINIO_ENDPOINT,
   MINIO_ACCESS_KEY,
@@ -112,19 +116,29 @@ const medusaConfig = {
         ]
       }
     }] : []),
-    ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
+    ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET || PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET ? [{
       key: Modules.PAYMENT,
       resolve: '@medusajs/payment',
       options: {
         providers: [
-          {
+          ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
             resolve: '@medusajs/payment-stripe',
             id: 'stripe',
             options: {
               apiKey: STRIPE_API_KEY,
               webhookSecret: STRIPE_WEBHOOK_SECRET,
             },
-          },
+          }] : []),
+          ...(PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET ? [{
+            resolve: '@medusajs/payment-paypal',
+            id: 'paypal',
+            options: {
+              clientId: PAYPAL_CLIENT_ID,
+              clientSecret: PAYPAL_CLIENT_SECRET,
+              sandbox: PAYPAL_SANDBOX,
+              authWebhookId: PAYPAL_AUTH_WEBHOOK_ID,
+            },
+          }] : []),
         ],
       },
     }] : [])
